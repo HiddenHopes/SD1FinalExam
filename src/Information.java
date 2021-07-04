@@ -1,5 +1,6 @@
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
@@ -50,21 +51,21 @@ public class Information extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 370, 270, 40));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 240, 270, 40));
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 240, 270, 40));
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 310, 270, 40));
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 300, 270, 40));
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 370, 270, 40));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Name");
@@ -113,21 +114,23 @@ public class Information extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String std_id = jTextField4.getText();
-        String name = jTextField1.getText();
-        String email = jTextField2.getText();
-        String dept = jTextField3.getText();
-try {
-            Connection con = ConnectionProvider.getCon();
-            Statement st = con.createStatement();
-            st.executeUpdate("INSERT INTO STUDENT values('" + std_id + "','" + name + "','" + email + "','" + dept +"')");
-            JOptionPane.showMessageDialog(null, "Succesfylly Updated");
-            setVisible(false);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Student id Already Exists");
-            setVisible(false);
+String ID = jTextField4.getText();
+         String query = "select *from st where id = "+ID;
+         try{
+             ResultSet rs = DBUTILS.queryExecute(query);
+             if(rs.next()){
+                String Name = rs.getString("name");
+                String Email = rs.getString("email");
+                String Department = rs.getString("dept");
+                
+                jTextField1.setText(Name);
+                jTextField2.setText(Email);
+                jTextField3.setText(Department);
+         }
+         }catch(Exception e){
+             
+         }
 
-        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
