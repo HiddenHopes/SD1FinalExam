@@ -6,6 +6,8 @@
 
 package com.sd;
 
+import java.sql.ResultSet;
+
 /**
  *
  * @author Nexus
@@ -192,7 +194,21 @@ public class StudentDetailFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
+        String id = idTextField.getText();
+        String query = "select * from student where id= "+id;
+        try{ 
+             ResultSet rs = DBUTILS.queryExecute(query);
+            if (rs.next () ) {
+                nameTextField.setText(rs.getString("name"));
+                ageTextField.setText(rs.getString("age"));
+                emailTextField.setText(rs.getString("email"));
+                deptTextField.setText(rs.getString("dept"));
+
+            
+    }               } catch (Exception e) { 
+      
+        }
+
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
@@ -267,4 +283,8 @@ public class StudentDetailFrame extends javax.swing.JFrame {
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
+
+    private void getText() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
